@@ -143,15 +143,12 @@ body {
     font-weight: bold;
 }
 
-/* Estructura de layout principal */
 .layout {
     display: flex;
     height: 100vh;
 }
 
-/* Sidebar ya existente (sin cambios mayores) */
 
-/* Contenedor del contenido principal */
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -160,7 +157,6 @@ body {
     transition: margin-left 0.3s ease;
 }
 
-/* Header como parte del contenido principal */
 .header {
     height: 60px;
     background: #fdfdfd;
@@ -171,7 +167,6 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-/* Estilos del buscador */
 .search-box {
     display: flex;
     align-items: center;
@@ -195,7 +190,6 @@ body {
     font-size: 1rem;
 }
 
-/* Iconos a la derecha del header */
 .header-right {
     display: flex;
     align-items: center;
@@ -217,14 +211,12 @@ body {
     object-fit: cover;
 }
 
-/* Main (contenido debajo del header) */
 main {
     flex-grow: 1;
     padding: 2rem;
     background-color: #fdfdfd;
 }
 
-/*Couse*/
 
 .course-card img {
     width: 100%;
@@ -253,7 +245,6 @@ i.fa-solid.fa-star {
     color: #ccaa2f;
 }
 
-/* === RESPONSIVE CAROUSEL WRAPPER === */
 .carousel-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -284,7 +275,6 @@ i.fa-solid.fa-star {
     padding: 5px 0px;
 }
 
-/* Mobile: convierte en carrusel horizontal */
 @media (max-width: 768px) {
     .course-grid {
         display: flex;
@@ -301,7 +291,6 @@ i.fa-solid.fa-star {
 }
 
 
-/* === CURSO DETALLE LAYOUT === */
 .course-layout {
     display: flex;
     gap: 2rem;
@@ -311,7 +300,6 @@ i.fa-solid.fa-star {
     color: #0f0f0f;
 }
 
-/* Secciones izquierda */
 .course-sections {
     flex: 1 1 500px;
 }
@@ -321,7 +309,6 @@ i.fa-solid.fa-star {
     margin-bottom: 1.5rem;
 }
 
-/* Accordion */
 .accordion-item {
     border-bottom: 1px solid #333;
 }
@@ -348,13 +335,10 @@ i.fa-solid.fa-star {
     transition: transform 0.3s;
 }
 
-/* Card derecha */
 .course-info-card {
     flex: 1 1 320px;
     background: #fefefe;
     border-radius: 12px;
-    /* overflow: hidden; */
-    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
 }
 
 .card-banner {
@@ -443,7 +427,6 @@ a.btn {
     color: #ffffff;
     background-color: #1d1438;
     padding: 15px 20px;
-    /* margin-top: 20px; */
     display: block;
     height: auto;
     width: 100%;
@@ -458,7 +441,6 @@ a.btn {
 
 .accordion-item.active .accordion-content {
     max-height: 300px;
-    /* ajusta según el contenido */
 }
 
 .accordion-item.active .accordion-header::after {
@@ -466,7 +448,6 @@ a.btn {
 }
 
 
-/* === Responsive Sidebar Toggle === */
 .menu-toggle {
     display: none;
     background: none;
@@ -476,7 +457,6 @@ a.btn {
     cursor: pointer;
 }
 
-/*Profile*/
 .profile-container {
     padding: 2rem;
     border-radius: 10px;
@@ -574,7 +554,6 @@ a.btn {
     .sidebar {
         position: fixed;
         top: 60px;
-        /* altura del header */
         left: -100%;
         width: 220px;
         height: calc(100%);
@@ -595,8 +574,6 @@ a.btn {
         gap: 10px;
     }
 
-
-
     .sidebar.open {
         left: 0;
         top: 0;
@@ -606,7 +583,6 @@ a.btn {
         padding: 1rem;
     }
 
-    /* Carrusel de cursos */
     .course-grid {
         display: flex;
         overflow-x: auto;

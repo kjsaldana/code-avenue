@@ -170,7 +170,6 @@ video {
     cursor: pointer;
 }
 
-/* === Responsive Sidebar === */
 .menu-toggle {
     display: none;
     background: none;
@@ -192,7 +191,6 @@ video {
     .sidebar {
         position: fixed;
         top: 60px;
-        /* altura del header */
         left: -100%;
         width: 260px;
         height: 100%;
