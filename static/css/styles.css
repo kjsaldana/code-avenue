@@ -36,6 +36,7 @@ body {
 
 .logo img {
     width: 170px;
+    min-width: 170px;
     height: 35px;
 }
 
@@ -122,7 +123,7 @@ body {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 350px));
     gap: 2rem;
 }
 
@@ -163,7 +164,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     border-bottom: 1px solid #eee;
 }
 
@@ -260,9 +261,10 @@ i.fa-solid.fa-star {
 
 .course-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 350px));
     gap: 2rem;
     padding: 2rem;
+    width: 100%;
 }
 
 .course-card a {
@@ -274,22 +276,6 @@ i.fa-solid.fa-star {
     text-decoration: none;
     padding: 5px 0px;
 }
-
-@media (max-width: 768px) {
-    .course-grid {
-        display: flex;
-        gap: 1rem;
-        padding: 1rem 0;
-        min-width: 100%;
-    }
-
-    .course-card {
-        flex: 0 0 auto;
-        scroll-snap-align: start;
-        width: 280px;
-    }
-}
-
 
 .course-layout {
     display: flex;
@@ -593,7 +579,7 @@ a.btn {
 
     .course-card {
         flex: 0 0 auto;
-        width: 280px;
+        width: 300px;
         scroll-snap-align: start;
     }
 }
