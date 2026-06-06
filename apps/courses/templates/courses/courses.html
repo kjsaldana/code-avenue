@@ -1,80 +1,51 @@
-{% extends 'includes/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
 {% block title %}
-  Courses
+    Courses
 {% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
 {% endblock %}
 
 {% block content %}
-  <div class="layout">
-    <div class="sidebar">
-      <div class="logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo" />
-      </div>
-      <ul class="menu">
-        <li>
-          <a class="menu-option" href="index.html"><i class="fa-solid fa-house icon"></i><span>Dashboard</span></a>
-        </li>
-        <li>
-          <a class="menu-option" href="courses.html"><i class="fa-solid fa-chalkboard-user icon"></i><span>Cursos</span></a>
-        </li>
-      </ul>
-      <ul class="bottom-menu">
-        <li>
-          <a class="menu-option" href="#"><i class="fa-solid fa-question icon"></i><span>Soporte</span></a>
-        </li>
-        <li>
-          <a class="menu-option" href="#"><i class="fa-solid fa-gear icon"></i><span>Configuración</span></a>
-        </li>
-      </ul>
-    </div>
+    <div class="layout">
+        {% include "includes/sidebar.html" %}
 
-    <div class="main-content">
-      <div class="header">
-        <div class="search-box">
-          <i class="fa-solid fa-magnifying-glass icon"></i>
-          <input type="text" placeholder="Buscar..." />
-        </div>
-        <div class="header-right">
-          <div class="avatar">
-            <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="User" />
-          </div>
-        </div>
-      </div>
-      <main>
-        <div class="carousel-wrapper">
-          <div class="course-grid">
-            {% for course in courses %}
-              <div class="course-card">
-                <a href="{% url 'course_detail' %}">
-                  <img src="{% static course.course_image %}" alt="Course Image" class="course-img" />
-                  <div class="course-info">
-                    <div class="course-rating">
-                      <span class="tag beginner">{{ course.level }}</span>
-                      <div class="course-meta">
-                        <span><i class="fa-solid fa-star"></i>{{ course.rating }}</span>
-                      </div>
-                    </div>
+        <div class="main-content">
+            {% include "includes/header.html" %}
+            <main>
+                <div class="carousel-wrapper">
+                    <div class="course-grid">
+                        {% for course in courses %}
+                            <div class="course-card">
+                                <a href="{% url 'course_detail' %}">
+                                    <img src="{% static course.course_image %}" alt="Course Image" class="course-img"/>
+                                    <div class="course-info">
+                                        <div class="course-rating">
+                                            <span class="tag beginner">{{ course.level }}</span>
+                                            <div class="course-meta">
+                                                <span><i class="fa-solid fa-star"></i>{{ course.rating }}</span>
+                                            </div>
+                                        </div>
 
-                    <h3 class="course-title">{{ course.course_title }}</h3>
-                    <div class="author">
-                      <img src="{{ course.instructor_image }}" alt="" /><span>{{ course.instructor }}</span>
+                                        <h3 class="course-title">{{ course.course_title }}</h3>
+                                        <div class="author">
+                                            <img src="{{ course.instructor_image }}"
+                                                 alt=""/><span>{{ course.instructor }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
-                  </div>
-                </a>
-              </div>
-            {% endfor %}
-          </div>
+                </div>
+            </main>
         </div>
-      </main>
     </div>
-  </div>
 {% endblock %}
 {% block scripts %}
-  <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
