@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
+
+{% load static %}
+
 {% block title %}
     Course Lessons
 {% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "css/lessons.css" %}">
+{% endblock style %}
+
 {% block content %}
     <header class="topbar">
         <div class="acciones">
@@ -10,7 +18,7 @@
             </div>
         </div>
         <div class="logo">
-            <img src="./images/devilearn.png" alt="Logo devilearn"/>
+            <img src="{% static 'images/logo.png' %}" alt="Logo devilearn"/>
         </div>
     </header>
     <div class="layout">
@@ -58,4 +66,8 @@
             </div>
         </main>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "js/multimedia.js" %}"></script>
 {% endblock %}
