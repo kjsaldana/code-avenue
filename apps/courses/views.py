@@ -44,7 +44,70 @@ def course_list(request):
 
 
 def course_detail(request):
-    return render(request, "courses/course_detail.html")
+    course = {
+        "course_title": "Apps de Django",
+        "course_link": "course_lessons",
+        "course_image": "images/curso_2.jpg",
+        "info_course": {
+            "lessons": 79,
+            "duration": 8,
+            "instructor": "Ricardo Moran"
+        },
+        "course_content": [
+            {
+                "id": 1,
+                "name": "Introducción al curso",
+                "lessons": [
+                    {
+                        "name": "¿Que aprenderás en el curso?",
+                        "type": "video",
+                    },
+                    {
+                        "name": "¿Como usar la plataforma?",
+                        "type": "file"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Modelos y el ORM",
+                "lessons": [
+                    {
+                        "name": "Diseño de modelos de datos",
+                        "type": "video",
+                    },
+                    {
+                        "name": "Aplicando migraciones a la base de datos",
+                        "type": "video"
+                    },
+                    {
+                        "name": "Hoja de trucos de consultas con el ORM",
+                        "type": "file"
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "name": "Vistas y Templates",
+                "lessons": [
+                    {
+                        "name": "Lógica en las vistas (Views)",
+                        "type": "video",
+                    },
+                    {
+                        "name": "Pasando diccionarios de contexto",
+                        "type": "video"
+                    },
+                    {
+                        "name": "Ejercicios prácticos de maquetación",
+                        "type": "file"
+                    }
+                ]
+            }
+        ]
+    }
+
+    return render(request, "courses/course_detail.html", {"course": course})
 
 
 def course_lessons(request):
