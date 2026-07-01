@@ -20,6 +20,7 @@ body {
     justify-content: space-between;
     transition: width 0.3s ease;
     overflow: hidden;
+    position: fixed;
 }
 
 .sidebar:hover {
@@ -151,13 +152,26 @@ body {
 
 
 .main-content {
+    /* Eliminamos el padding-left fijo que tenías antes (55px) */
+    padding-left: 0;
+
+    /* Usamos margin-left para empujar el contenido de verdad y dejarle el espacio al sidebar fixed */
+    margin-left: 55px;
+
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     background-color: #f0f0f0;
+
+    /* Añadimos la misma transición que tiene el sidebar para que se muevan a la par */
     transition: margin-left 0.3s ease;
 }
 
+/* 2. Añadimos esta regla NUEVA */
+/* Cuando pases el mouse por el sidebar, empujamos el main-content hacia la derecha */
+.sidebar:hover ~ .main-content {
+    margin-left: 180px;
+}
 .header {
     height: 60px;
     background: #fdfdfd;
@@ -568,8 +582,9 @@ a.btn {
         top: 0;
     }
 
-    .main-content {
+.main-content {
         padding: 1rem;
+        margin-left: 0; /* IMPORTANTE: Reseteamos el margen en móviles para que ocupe toda la pantalla */
     }
 
     .course-grid {
