@@ -1,46 +1,31 @@
 from django.shortcuts import render
+from .models import Course
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 
 def course_list(request):
-    courses = [
-        {
-            "id": 1,
-            "level": "Beginner",
-            "rating": 5.0,
-            "course_title": "Three-month Course to Learn the Basics of Python and Start Coding.",
-            "instructor": "Alison Walsh",
-            "course_image": "images/curso_1.jpg",
-            "instructor_image": "https://randomuser.me/api/portraits/women/68.jpg",
-        },
-        {
-            "id": 2,
-            "level": "Beginner",
-            "rating": 4.0,
-            "course_title": "Beginner's Guide to Successful Company Management: Business And More",
-            "instructor": "Patty Kutch",
-            "course_image": "images/curso_2.jpg",
-            "instructor_image": "https://randomuser.me/api/portraits/women/20.jpg",
-        },
-        {
-            "id": 3,
-            "level": "Beginner",
-            "rating": 3.6,
-            "course_title": "A Fascinating Theory of Probability. Practice. Application. How to Outplay...",
-            "instructor": "Alonzo Murray",
-            "course_image": "images/curso_3.jpg",
-            "instructor_image": "https://randomuser.me/api/portraits/men/32.jpg",
-        },
-        {
-            "id": 4,
-            "level": "Beginner",
-            "rating": 4.9,
-            "course_title": "Introduction: Machine Learning and LLM. Implementation in Modern Software",
-            "instructor": "Gregory Harris",
-            "course_image": "images/curso_4.jpg",
-            "instructor_image": "https://randomuser.me/api/portraits/men/45.jpg",
-        },
-    ]
-    return render(request, "courses/courses.html", {"courses": courses})
+    courses = Course.objects.all()
+    query = request.GET.get("query")
+
+    if query:
+        courses = courses.filter(
+            Q(title__icontains=query) | Q(owner__first_name__icontains=query)
+        )
+
+    paginator = Paginator(courses, 8)
+    page_number = request.GET.get("page")
+    courses_obj = paginator.get_page(page_number)
+
+    # parametro usados para quitar page previo
+    query_params = request.GET.copy()
+
+    if "page" in query_params:
+        query_params.pop("page")
+
+    query_string = query_params.urlencode()
+
+    return render(request, "courses/courses.html", {"courses_obj": courses_obj, "query": query, "query_string": query_string})
 
 
 def course_detail(request):

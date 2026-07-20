@@ -172,6 +172,7 @@ body {
 .sidebar:hover ~ .main-content {
     margin-left: 180px;
 }
+
 .header {
     height: 60px;
     background: #fdfdfd;
@@ -582,7 +583,7 @@ a.btn {
         top: 0;
     }
 
-.main-content {
+    .main-content {
         padding: 1rem;
         margin-left: 0; /* IMPORTANTE: Reseteamos el margen en móviles para que ocupe toda la pantalla */
     }
@@ -600,4 +601,8 @@ a.btn {
         width: 300px;
         scroll-snap-align: start;
     }
+}
+
+.paginator {
+    text-align: center;
 }

@@ -3,13 +3,53 @@
     "model": "courses.category",
     "pk": 1,
     "fields": {
+      "name": "DevOps",
+      "slug": "devops"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 2,
+    "fields": {
+      "name": "Mobile Development",
+      "slug": "mobile-development"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 3,
+    "fields": {
+      "name": "Machine Learning",
+      "slug": "machine-learning"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 4,
+    "fields": {
+      "name": "Data Science",
+      "slug": "data-science"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 5,
+    "fields": {
+      "name": "JavaScript",
+      "slug": "javascript"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 6,
+    "fields": {
       "name": "Django",
       "slug": "django"
     }
   },
   {
     "model": "courses.category",
-    "pk": 2,
+    "pk": 7,
     "fields": {
       "name": "Golang",
       "slug": "golang"
@@ -17,7 +57,7 @@
   },
   {
     "model": "courses.category",
-    "pk": 3,
+    "pk": 8,
     "fields": {
       "name": "Python",
       "slug": "python"
@@ -25,7 +65,7 @@
   },
   {
     "model": "courses.category",
-    "pk": 4,
+    "pk": 9,
     "fields": {
       "name": "Software Development",
       "slug": "software-development"
@@ -33,7 +73,7 @@
   },
   {
     "model": "courses.category",
-    "pk": 5,
+    "pk": 10,
     "fields": {
       "name": "Web Development",
       "slug": "web-development"
