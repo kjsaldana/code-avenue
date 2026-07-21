@@ -21,16 +21,31 @@
                         <h2>Contenido del curso</h2>
                         <div class="accordion">
 
-                            {% for section in course.course_content %}
+                            {% for module in modules %}
                                 <div class="accordion-item">
                                     <button class="accordion-header">
-                                        Sección {{ section.id }}: {{ section.name }}</button>
+                                        Sección {{ forloop.counter }}: {{ module.title }}</button>
                                     <div class="accordion-content">
                                         <ul>
-                                            {% for lesson in section.lessons %}
+                                            {% for content in module.contents.all %}
                                                 <li>
-                                                    <i class="fa-solid fa-{{ lesson.type }}"></i>{{ lesson.name }}
+                                                    {% if content.content_type.model == "video" %}
+                                                        <i class="fa-solid fa-video"></i>
+                                                    {% endif %}
+                                                    {% if content.content_type.model == "file" %}
+                                                        <i class="fa-solid fa-file"></i>
+                                                    {% endif %}
+                                                    {% if content.content_type.model == "text" %}
+                                                        <i class="fa-solid fa-align-left"></i>
+                                                    {% endif %}
+                                                    {% if content.content_type.model == "image" %}
+                                                        <i class="fa-solid fa-image"></i>
+                                                    {% endif %}
+                                                    <i class="fa-solid "></i>
+                                                    {{ content.item.title }}
                                                 </li>
+                                            {% empty %}
+                                                Sin contenido.
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -42,15 +57,18 @@
 
                     <div class="course-info-card">
                         <div class="card-banner">
-                            <div class="tag">{devilearn}</div>
-                            <img src="{% static course.course_image %}"
-                                 alt="Curso Django"/>
+                            <div class="tag">{{ course.level }}</div>
+                            <img src="
+
+                                    {% if course.image %}{{ course.image }} {% else %}https://placehold.co/600x200/1e1e1e/ffffff?text={{ course.title }} {% endif %}"
+                                 alt="{{ course.title }}"/>
                             <img class="author-avatar"
-                                 src="https://randomuser.me/api/portraits/men/15.jpg"
+                                 src="{{ course.owner.instructor_profile.photo }}"
                                  alt="Autor"/>
                         </div>
 
                         <div class="card-body">
+                            <h1>{{ course.title }}</h1>
                             <h3>Acerca de este curso</h3>
                             <ul class="course-details">
                                 <li>
@@ -61,10 +79,10 @@
                                     contenido en video
                                 </li>
                                 <li>
-                                    <i class="fa-solid fa-graduation-cap"></i> {{ course.info_course.duration }}
+                                    <i class="fa-solid fa-graduation-cap"></i> {{ course.owner.get_full_name }}
                                 </li>
                             </ul>
-                            <a class="btn bnt-primary btn-course" href="{% url course.course_link %}">Continuar
+                            <a class="btn bnt-primary btn-course" href="{% url 'course_lessons' course.slug %}">Continuar
                                 aprendiendo</a>
                         </div>
                     </div>

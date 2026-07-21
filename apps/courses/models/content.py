@@ -32,7 +32,7 @@ class Image(ItemBase):
 
 
 class Video(ItemBase):
-    file = models.FileField()
+    file = models.URLField()
 
 
 class Content(models.Model):

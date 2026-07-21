@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, Course, CourseCategory, Module, Enrollment, Progress, Review
+from .models import Category, Course, CourseCategory, Module, Enrollment, Progress, Review, Content, Text, Video, File, \
+    Image
 
 
 # Register your models here.
@@ -51,3 +52,26 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ["user", "course", "rating", "created_at"]
     list_filter = ["rating", "created_at"]
     search_fields = ["user__username", "course__title", "comment"]
+
+
+@admin.register(Content)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["module", "content_type", "item"]
+    list_filter = ["module", ]
+
+
+@admin.register(Text)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["owner", "title", "updated_at", "content"]
+
+@admin.register(File)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["owner", "title", "updated_at", "file"]
+
+@admin.register(Video)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["owner", "title", "updated_at", "file"]
+
+@admin.register(Image)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["owner", "title", "updated_at", "file"]
