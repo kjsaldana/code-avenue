@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Course
+from apps.courses.models import Course
 from django.db.models import Q
 from django.core.paginator import Paginator
 
