@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    Crear / Editar curso
+{% endblock %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/instructor_styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="layout">
+        {% include 'includes/sidebar_instructor.html' %}
+        <div class="main-content">
+            {% include 'includes/header_instructor.html' %}
+            <main>
+                <h2 class="form-title">Estas seguro que quieres eliminar "{{ object.title }}."</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Si, eliminar</button>
+                </form>
+                <a class="btn-cancel" href="{% url 'instructor:course_list' %}">Cancelar</a>
+            </main>
+        </div>
+    </div>
+{% endblock %}
