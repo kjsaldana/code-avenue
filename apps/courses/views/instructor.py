@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, CreateView, View
 from django.views.generic.edit import UpdateView, DeleteView
-from ..models import Course, Module
+from ..models import Course, Module, Content
 
 
 class InstructorRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -38,6 +38,7 @@ class CourseUpdateView(InstructorRequiredMixin, UpdateView):
     template_name = 'instructor/course_form.html'
     success_url = reverse_lazy('instructor:course_list')
 
+    # filtra que sea el propietario el que lo actualiza
     def get_queryset(self):
         return Course.objects.filter(owner=self.request.user)
 
@@ -66,3 +67,59 @@ class ModuleListView(InstructorRequiredMixin, ListView):
         context['course'] = self.course
         return context
 
+
+class ModuleCreateView(InstructorRequiredMixin, CreateView):
+    model = Module
+    fields = ['title', 'description']
+    template_name = 'instructor/module_form.html'
+
+    def form_valid(self, form):
+        course = get_object_or_404(
+            Course, id=self.kwargs['course_id'], owner=self.request.user)
+        form.instance.course = course
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('instructor:module_list', args=[self.object.course.id])
+
+
+class ModuleUpdateView(InstructorRequiredMixin, UpdateView):
+    model = Module
+    fields = ['title', 'description']
+    template_name = 'instructor/module_form.html'
+
+    def get_queryset(self):
+        return Module.objects.filter(course__owner=self.request.user)
+
+    def get_success_url(self):
+        return reverse('instructor:module_list', args=[self.object.course.id])
+
+
+class ModuleDeleteView(InstructorRequiredMixin, DeleteView):
+    model = Module
+    template_name = 'instructor/module_confirm_delete.html'
+
+    def get_queryset(self):
+        return Module.objects.filter(course__owner=self.request.user)
+
+    def get_success_url(self):
+        return reverse('instructor:module_list', args=[self.object.course.id])
+
+
+class ContentListView(InstructorRequiredMixin, ListView):
+    model = Content
+    template_name = 'instructor/content_list.html'
+    context_object_name = 'contents'
+
+    def get_queryset(self):
+        self.module = get_object_or_404(Module, id=self.kwargs['module_id'], course__owner=self.request.user)
+        return self.module.contents.all().select_related('content_type').order_by('order')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['module'] = self.module
+        return context
+
+
+class ContentCreateUpdateView(InstructorRequiredMixin, View):
+    pass

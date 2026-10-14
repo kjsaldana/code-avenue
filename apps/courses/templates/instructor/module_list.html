@@ -17,16 +17,19 @@
             <main>
                 <h2 class="form-title">Modulos de {{ course.title }}</h2>
                 <div class="add-new-course">
-                    <a href="#">Agregar módulo</a>
+                    <a href="{% url 'instructor:module_add' course.id %}">Agregar módulo</a>
                 </div>
                 <ul class="drag-list" id="module-list">
                     {% for module in object_list %}
                         <li class="drag-item" data-id="{{ module.id }}">
                             <strong>{{ module.title }}</strong>
                             <div class="actions">
-                                <a href="#"><i class="fa-solid fa-eye"></i>Ver contenido</a>
-                                <a href="#"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="#"><i class="fa-solid fa-trash"></i></a>
+                                <a href="{% url 'instructor:content_list' module.id %}"><i class="fa-solid fa-eye"></i>Ver
+                                    contenido</a>
+                                <a href="{% url 'instructor:module_edit' module.id %}"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{% url 'instructor:module_delete' module.id %}"><i
+                                        class="fa-solid fa-trash"></i></a>
                             </div>
                         </li>
                     {% empty %}
