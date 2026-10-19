@@ -1,9 +1,20 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
+from django.forms.models import modelform_factory
+from django.http.response import HttpResponseForbidden, JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, View
 from django.views.generic.edit import UpdateView, DeleteView
-from ..models import Course, Module, Content
+from ..models import Course, Module, Content, Text, Image, File, Video
+import json
+
+CONTENT_MODELS = {
+    'text': Text,
+    'image': Image,
+    'file': File,
+    'video': Video
+}
 
 
 class InstructorRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -60,7 +71,7 @@ class ModuleListView(InstructorRequiredMixin, ListView):
 
     def get_queryset(self):
         self.course = get_object_or_404(Course, id=self.kwargs['course_id'], owner=self.request.user)
-        return self.course.modules.all()
+        return self.course.modules.all().order_by('order')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -122,4 +133,83 @@ class ContentListView(InstructorRequiredMixin, ListView):
 
 
 class ContentCreateUpdateView(InstructorRequiredMixin, View):
-    pass
+    template_name = 'instructor/content_form.html'
+
+    def get_model(self, model_name):
+        return CONTENT_MODELS.get(model_name, None)
+
+    def get_form(self, model, *args, **kwargs):
+        Form = modelform_factory(model, exclude=['owner', 'created_at', 'updated_at', ])
+        return Form(*args, **kwargs)
+
+    def dispatch(self, request, module_id=None, model_name=None, id=None, *args, **kwargs):
+        self.module = get_object_or_404(Module, id=module_id, course__owner=request.user)
+        self.model = self.get_model(model_name)
+        self.obj = None
+
+        if id:
+            try:
+                content = Content.objects.select_related('content_type').get(
+                    object_id=id,
+                    content_type=ContentType.objects.get_for_model(self.model),
+                    module=self.module
+                )
+                self.obj = content.item
+            except Content.DoesNotExist:
+                return HttpResponseForbidden("No tiene permiso o tipo invalido")
+
+        return super().dispatch(request, module_id, model_name, id, *args, **kwargs)
+
+    def get(self, request, module_id, model_name, id=None):
+        form = self.get_form(self.model, instance=self.obj)
+        return render(request, self.template_name, {'form': form, 'object': self.obj})
+
+    def post(self, request, module_id, model_name, id=None):
+        form = self.get_form(self.model, instance=self.obj, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.owner = request.user
+            obj.save()
+            if not id:
+                Content.objects.create(module=self.module, item=obj)
+            return redirect('instructor:content_list', module_id=self.module.id)
+        return render(request, self.template_name, {'form': form, 'object': self.obj})
+
+
+class ContentDeleteView(InstructorRequiredMixin, DeleteView):
+    model = Content
+    template_name = 'instructor/content_confirm_delete.html'
+
+    def get_queryset(self):
+        return Content.objects.filter(module__course__owner=self.request.user)
+
+    def get_success_url(self):
+        return reverse('instructor:content_list', args=[self.object.module.id])
+
+
+class ModuleOrderView(InstructorRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)
+            order = data.get('order', [])
+
+            for index, module_id in enumerate(order):
+                Module.objects.filter(id=module_id, course__owner=request.user).update(order=index)
+
+            return JsonResponse({'status': 'ok'})
+        except Exception as err:
+            return JsonResponse({'status': 'error', 'message': str(err)}, status=400)
+
+
+class ContentOrderView(InstructorRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)
+            order = data.get('order', [])
+
+            for index, content_id in enumerate(order):
+                Content.objects.filter(id=content_id, module__course__owner=request.user).update(order=index)
+
+            return JsonResponse({'status': 'ok'})
+        except Exception as err:
+            return JsonResponse({'status': 'error', 'message': str(err)}, status=400)

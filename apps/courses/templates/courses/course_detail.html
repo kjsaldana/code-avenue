@@ -60,6 +60,7 @@
                             <div class="tag">{{ course.level }}</div>
                             <img src="
 
+
                                     {% if course.image %}{{ course.image }} {% else %}https://placehold.co/600x200/1e1e1e/ffffff?text={{ course.title }} {% endif %}"
                                  alt="{{ course.title }}"/>
                             <img class="author-avatar"
@@ -82,7 +83,7 @@
                                     <i class="fa-solid fa-graduation-cap"></i> {{ course.owner.get_full_name }}
                                 </li>
                             </ul>
-                            <a class="btn bnt-primary btn-course" href="{% url 'course_lessons' course.slug %}">Continuar
+                            <a class="btn bnt-primary btn-course" href="{% url 'student:course_lessons' course.slug %}">Continuar
                                 aprendiendo</a>
                         </div>
                     </div>
