@@ -70,7 +70,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ["owner", "title", "updated_at", "file"]
+    list_display = ["owner", "title", "updated_at", "url"]
 
 @admin.register(Image)
 class ReviewAdmin(admin.ModelAdmin):

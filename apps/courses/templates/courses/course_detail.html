@@ -58,10 +58,7 @@
                     <div class="course-info-card">
                         <div class="card-banner">
                             <div class="tag">{{ course.level }}</div>
-                            <img src="
-
-
-                                    {% if course.image %}{{ course.image }} {% else %}https://placehold.co/600x200/1e1e1e/ffffff?text={{ course.title }} {% endif %}"
+                            <img src="{% if course.image %}{{ course.image }} {% else %}https://placehold.co/600x200/1e1e1e/ffffff?text={{ course.title }} {% endif %}"
                                  alt="{{ course.title }}"/>
                             <img class="author-avatar"
                                  src="{{ course.owner.instructor_profile.photo }}"
