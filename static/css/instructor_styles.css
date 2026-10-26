@@ -163,5 +163,6 @@ form button {
 
 .form-logout {
     background: transparent;
-    padding: 0px;
+    padding: 0;
+    margin: 0;
 }

@@ -29,7 +29,9 @@
     <header class="topbar">
         <div class="acciones">
             <div class="back-link">
-                <button class="discusiones">← Ve al panel de control</button>
+                <a href="{{ request.META.HTTP_REFERER }}">
+                    <button class="discusiones">← Ve al panel de control</button>
+                </a>
             </div>
         </div>
         <div class="logo">
