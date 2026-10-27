@@ -473,7 +473,10 @@ a.btn {
 
 .profile-picture {
     flex: 1 1 200px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 .profile-picture img {
@@ -619,4 +622,8 @@ a.btn {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+}
+
+.alert-success {
+    color: #228c00;
 }
